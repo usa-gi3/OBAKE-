@@ -1,0 +1,9 @@
+﻿kitune
+tanuki
+tennpura
+tukimi
+oniku
+higasimaru
+udonudonudonsu-pu
+u
+u
