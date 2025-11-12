@@ -55,10 +55,10 @@ public class InkController : MonoBehaviour
             }
         }
 
-        RefreshChoices();
+        //RefreshChoices();
     }
 
-    void RefreshChoices()
+    /*void RefreshChoices()
     {
         // Šù‘¶‚Ì‘I‘ğˆ‚ğíœ
         foreach (Transform child in choiceButtonContainer)
@@ -82,7 +82,7 @@ public class InkController : MonoBehaviour
         {
             EndDialogue();
         }
-    }
+    }*/
 
     void OnChoiceSelected(int choiceIndex)
     {
