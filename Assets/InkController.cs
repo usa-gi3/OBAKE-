@@ -18,18 +18,18 @@ public class InkController : MonoBehaviour
 
     private Story story;
 
-    public void StartDialogue()
+    public void StartKnot(TextAsset inkJSON, string knotName)
     {
-        Debug.Log("StartDialogueÇ™åƒÇŒÇÍÇ‹ÇµÇΩ");
-
-        if (inkJSONAsset == null)
+        if (inkJSON == null)
         {
-            Debug.LogError("inkJSONAsset Ç™ê›íËÇ≥ÇÍÇƒÇ¢Ç‹ÇπÇÒ");
+            Debug.LogError("Ink JSON Ç™ null Ç≈Ç∑");
             return;
         }
 
-        story = new Story(inkJSONAsset.text);
+        inkJSONAsset = inkJSON;
 
+        story = new Story(inkJSONAsset.text);
+        story.ChoosePathString(knotName);   // Å© éwíËÇµÇΩknotÇì«Çﬁ
 
         dialoguePanel.SetActive(true);
         ContinueStory();
@@ -55,10 +55,10 @@ public class InkController : MonoBehaviour
             }
         }
 
-        //RefreshChoices();
+        RefreshChoices();
     }
 
-    /*void RefreshChoices()
+    void RefreshChoices()
     {
         // ä˘ë∂ÇÃëIëéàÇçÌèú
         foreach (Transform child in choiceButtonContainer)
@@ -81,8 +81,12 @@ public class InkController : MonoBehaviour
         if (story.currentChoices.Count == 0 && !story.canContinue)
         {
             EndDialogue();
+
+            NPCchoice npc = FindObjectOfType<NPCchoice>();
+            if (npc != null)
+                npc.PlaySecondStory();
         }
-    }*/
+    }
 
     void OnChoiceSelected(int choiceIndex)
     {
