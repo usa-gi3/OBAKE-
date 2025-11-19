@@ -45,59 +45,45 @@ public class InkController : MonoBehaviour
         blockClick = false;
         dialogueText.text = "";
 
-        // 選択肢を押したあとは全文読む
+        string fullText = "";
+
+        // ▼ choiceSelected のときは全文読み
         if (choiceSelected)
         {
-           
+            // canContinue が true の間は読み続ける
             while (story.canContinue)
             {
-                Debug.Log("ストーリー！！！！ ");
-                string text = story.Continue().Trim();
-                dialogueText.text = text;
+                string line = story.Continue().Trim();
+                fullText += line + "\n";
+            }
 
-                /*foreach (string tag in story.currentTags)
-                {
-                    if (tag.StartsWith("scene:"))
-                    {
-                        string sceneName = tag.Substring("scene:".Length).Trim();
-                        SceneManager.LoadScene(sceneName);
-                        return;
-                    }
-                }*/
+            // ★ 最後の1行（canContinue が false の時の currentText）を必ず拾う
+            string last = story.currentText?.Trim();
+            if (!string.IsNullOrEmpty(last))
+            {
+                fullText += last;
             }
 
             choiceSelected = false;
         }
         else
         {
-            Debug.Log("story.canContinue が false");
+            // ▼ 通常時は1行だけ読む
             if (story.canContinue)
             {
-                string text = story.Continue().Trim();
-                dialogueText.text = text;
-
-            // タグをチェックしてシーン移動
-                foreach (string tag in story.currentTags)
-                {
-                Debug.Log("Current Tag: " + tag);
-                    if (tag.StartsWith("scene:"))
-                    {
-                        string sceneName = tag.Substring("scene:".Length).Trim();
-                    Debug.Log("Loading Scene: " + sceneName);
-                        SceneManager.LoadScene(sceneName);
-                        return;
-                    }
-                }
-                
+                fullText = story.Continue().Trim();
             }
             else
             {
-                Debug.Log("story.canContinue が false");
+                // ★ canContinue が false でも currentText が残っていることがある
+                fullText = story.currentText?.Trim();
             }
         }
 
+        dialogueText.text = fullText;
         RefreshChoices();
     }
+
 
     void RefreshChoices()
     {
@@ -120,7 +106,7 @@ public class InkController : MonoBehaviour
         }
 
         // 選択肢がない場合は終了
-        if (story.currentChoices.Count == 0 && !story.canContinue)
+        if (!choiceSelected && story.currentChoices.Count == 0 && !story.canContinue)
         {
             EndDialogue();
 
@@ -133,9 +119,12 @@ public class InkController : MonoBehaviour
     void OnChoiceSelected(int choiceIndex)
     {
         Debug.Log("選択肢を選んだ: " + choiceIndex);
-        blockClick = true;
-        choiceSelected = true; 
+
+        blockClick = false;
+        choiceSelected = false;
+
         story.ChooseChoiceIndex(choiceIndex);
+
         ContinueStory();
     }
 
@@ -143,6 +132,15 @@ public class InkController : MonoBehaviour
     {
         dialoguePanel.SetActive(false);
         Debug.Log("Dialogue ended.");
+
+        // 2回目だったらリセット
+        if (PlayerPrefs.HasKey("FirstStoryPlayed"))
+        {
+            PlayerPrefs.DeleteKey("FirstStoryPlayed");
+            PlayerPrefs.DeleteKey("FirstStory");
+            PlayerPrefs.Save();
+            Debug.Log("ストーリー情報をリセットしました");
+        }
     }
 
     void Update()
