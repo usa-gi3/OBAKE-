@@ -17,6 +17,9 @@ public class InkController : MonoBehaviour
     public Transform choiceButtonContainer;
 
     private Story story;
+    bool choiceSelected = false;
+    bool blockClick = false;
+
 
     public void StartKnot(TextAsset inkJSON, string knotName)
     {
@@ -33,25 +36,63 @@ public class InkController : MonoBehaviour
 
         dialoguePanel.SetActive(true);
         ContinueStory();
+
+
     }
 
     void ContinueStory()
     {
-        if (story.canContinue)
+        blockClick = false;
+        dialogueText.text = "";
+
+        // 選択肢を押したあとは全文読む
+        if (choiceSelected)
         {
-            string text = story.Continue().Trim();
-            dialogueText.text = text;
+           
+            while (story.canContinue)
+            {
+                Debug.Log("ストーリー！！！！ ");
+                string text = story.Continue().Trim();
+                dialogueText.text = text;
+
+                /*foreach (string tag in story.currentTags)
+                {
+                    if (tag.StartsWith("scene:"))
+                    {
+                        string sceneName = tag.Substring("scene:".Length).Trim();
+                        SceneManager.LoadScene(sceneName);
+                        return;
+                    }
+                }*/
+            }
+
+            choiceSelected = false;
+        }
+        else
+        {
+            Debug.Log("story.canContinue が false");
+            if (story.canContinue)
+            {
+                string text = story.Continue().Trim();
+                dialogueText.text = text;
 
             // タグをチェックしてシーン移動
-            foreach (string tag in story.currentTags)
-            {
-                Debug.Log("Current Tag: " + tag);
-                if (tag.StartsWith("scene:"))
+                foreach (string tag in story.currentTags)
                 {
-                    string sceneName = tag.Substring("scene:".Length).Trim();
+                Debug.Log("Current Tag: " + tag);
+                    if (tag.StartsWith("scene:"))
+                    {
+                        string sceneName = tag.Substring("scene:".Length).Trim();
                     Debug.Log("Loading Scene: " + sceneName);
-                    SceneManager.LoadScene(sceneName);
+                        SceneManager.LoadScene(sceneName);
+                        return;
+                    }
                 }
+                
+            }
+            else
+            {
+                Debug.Log("story.canContinue が false");
             }
         }
 
@@ -60,6 +101,7 @@ public class InkController : MonoBehaviour
 
     void RefreshChoices()
     {
+        Debug.Log("RefreshChoices呼び出し");
         // 既存の選択肢を削除
         foreach (Transform child in choiceButtonContainer)
         {
@@ -90,6 +132,9 @@ public class InkController : MonoBehaviour
 
     void OnChoiceSelected(int choiceIndex)
     {
+        Debug.Log("選択肢を選んだ: " + choiceIndex);
+        blockClick = true;
+        choiceSelected = true; 
         story.ChooseChoiceIndex(choiceIndex);
         ContinueStory();
     }
@@ -102,11 +147,13 @@ public class InkController : MonoBehaviour
 
     void Update()
     {
-        if (story == null || dialoguePanel == null)
+        if (story == null || dialoguePanel == null || blockClick)
             return;
 
         if (dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
         {
+            Debug.Log("クリックした");
+            Debug.Log("choiceSelectedは" + choiceSelected);
             if (story.canContinue)
                 ContinueStory();
         }
