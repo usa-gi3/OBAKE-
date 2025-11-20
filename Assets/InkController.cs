@@ -122,7 +122,7 @@ public class InkController : MonoBehaviour
         Debug.Log("‘I‘ðŽˆ‚ð‘I‚ñ‚¾: " + choiceIndex);
 
         blockClick = false;
-        choiceSelected = true;
+        choiceSelected = false;
 
         story.ChooseChoiceIndex(choiceIndex);
 
