@@ -11,6 +11,9 @@ public class NPCchoice : MonoBehaviour
 
     void Start()
     {
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
         if (!PlayerPrefs.HasKey("FirstStoryPlayed"))
         {
             // 1‰ñ–Ú

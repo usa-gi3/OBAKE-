@@ -47,6 +47,7 @@ public class InkController : MonoBehaviour
 
         string fullText = "";
 
+
         // ¥ choiceSelected ‚Ì‚Æ‚«‚Í‘S•¶“Ç‚İ
         if (choiceSelected)
         {
@@ -121,7 +122,7 @@ public class InkController : MonoBehaviour
         Debug.Log("‘I‘ğˆ‚ğ‘I‚ñ‚¾: " + choiceIndex);
 
         blockClick = false;
-        choiceSelected = false;
+        choiceSelected = true;
 
         story.ChooseChoiceIndex(choiceIndex);
 
