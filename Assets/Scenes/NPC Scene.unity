@@ -398,6 +398,8 @@ MonoBehaviour:
   dialogueText: {fileID: 1191242474}
   choiceButtonPrefab: {fileID: 3680815435218823778, guid: a3da6c5029d9aa44dbc0ba18d47c43cc, type: 3}
   choiceButtonContainer: {fileID: 155919753}
+  characterSets: []
+  characterImage: {fileID: 0}
 --- !u!4 &1093991097
 Transform:
   m_ObjectHideFlags: 0

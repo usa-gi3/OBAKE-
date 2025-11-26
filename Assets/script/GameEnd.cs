@@ -4,7 +4,7 @@ using UnityEngine;
 
 public class GameEnd : MonoBehaviour
 {
-    //ゲーム終了:ボタンから呼び出す
+
     public void EndGame()
     {
 #if UNITY_EDITOR

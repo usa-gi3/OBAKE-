@@ -4,6 +4,7 @@ using UnityEngine.UI;
 using Ink.Runtime;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using static Character;
 
 public class InkController : MonoBehaviour
 {
@@ -15,6 +16,8 @@ public class InkController : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public GameObject choiceButtonPrefab;
     public Transform choiceButtonContainer;
+    public CharacterExpressionSet[] characterSets;
+    public Image characterImage; // UI �̉摜
 
     private Story story;
     bool choiceSelected = false;
@@ -80,6 +83,34 @@ public class InkController : MonoBehaviour
         RefreshChoices();
     }
 
+    void HandleTags(List<string> tags)
+    {
+        foreach (string tag in tags)
+        {
+            if (tag.StartsWith("char:"))
+            {
+                string[] parts = tag.Substring(5).Split(' ');
+
+                string charName = parts[0];    // toki
+                string expName = parts[1];     // happy
+
+                foreach (var set in characterSets)
+                {
+                    if (set.characterName == charName)
+                    {
+                        foreach (var exp in set.expressions)
+                        {
+                            if (exp.expressionName == expName)
+                            {
+                                characterImage.sprite = exp.sprite;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     void RefreshChoices()
     {
