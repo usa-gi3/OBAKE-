@@ -4,7 +4,6 @@ using UnityEngine.UI;
 using Ink.Runtime;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
-using static Character;
 
 public class InkController : MonoBehaviour
 {
@@ -56,7 +55,7 @@ public class InkController : MonoBehaviour
             {
                 string line = story.Continue().Trim();
 
-                HandleTags(story.currentTags); // ←★ここでタグ処理
+                HandleTags(story.currentTags); 
 
                 fullText += line + "\n";
             }
@@ -75,7 +74,7 @@ public class InkController : MonoBehaviour
             {
                 fullText = story.Continue().Trim();
 
-                HandleTags(story.currentTags); // ←★ここも必要
+                HandleTags(story.currentTags);
             }
             else
             {
