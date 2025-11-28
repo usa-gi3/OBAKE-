@@ -50,12 +50,14 @@ public class InkController : MonoBehaviour
 
         string fullText = "";
 
-
         if (choiceSelected)
         {
             while (story.canContinue)
             {
                 string line = story.Continue().Trim();
+
+                HandleTags(story.currentTags); // ←★ここでタグ処理
+
                 fullText += line + "\n";
             }
 
@@ -72,6 +74,8 @@ public class InkController : MonoBehaviour
             if (story.canContinue)
             {
                 fullText = story.Continue().Trim();
+
+                HandleTags(story.currentTags); // ←★ここも必要
             }
             else
             {
@@ -82,6 +86,7 @@ public class InkController : MonoBehaviour
         dialogueText.text = fullText;
         RefreshChoices();
     }
+
 
     void HandleTags(List<string> tags)
     {
