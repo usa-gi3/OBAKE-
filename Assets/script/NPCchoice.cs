@@ -11,6 +11,12 @@ public class NPCchoice : MonoBehaviour
 
     void Start()
     {
+        if (firstStory != "")
+        {
+            // ‘O‰ñ“r’†‚ÅI‚í‚Á‚Ä‚¢‚½ ¨ 1‰ñ–Ú‚ğÄŠJ
+            inkController.StartKnot(inkJSONAsset, firstStory);
+            return;
+        }
 
         if (!PlayerPrefs.HasKey("FirstStoryPlayed"))
         {

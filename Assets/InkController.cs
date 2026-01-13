@@ -15,6 +15,8 @@ public class InkController : MonoBehaviour
     public TextMeshProUGUI dialogueText;
     public GameObject choiceButtonPrefab;
     public Transform choiceButtonContainer;
+    public CharacterExpressionSet[] characterSets;
+    public Image characterImage; // UI の画像
 
     private Story story;
     bool choiceSelected = false;
@@ -47,18 +49,17 @@ public class InkController : MonoBehaviour
 
         string fullText = "";
 
-
-        // ▼ choiceSelected のときは全文読み
         if (choiceSelected)
         {
-            // canContinue が true の間は読み続ける
             while (story.canContinue)
             {
                 string line = story.Continue().Trim();
+
+                HandleTags(story.currentTags); 
+
                 fullText += line + "\n";
             }
 
-            // ★ 最後の1行（canContinue が false の時の currentText）を必ず拾う
             string last = story.currentText?.Trim();
             if (!string.IsNullOrEmpty(last))
             {
@@ -69,14 +70,14 @@ public class InkController : MonoBehaviour
         }
         else
         {
-            // ▼ 通常時は1行だけ読む
             if (story.canContinue)
             {
                 fullText = story.Continue().Trim();
+
+                HandleTags(story.currentTags);
             }
             else
             {
-                // ★ canContinue が false でも currentText が残っていることがある
                 fullText = story.currentText?.Trim();
             }
         }
@@ -85,6 +86,35 @@ public class InkController : MonoBehaviour
         RefreshChoices();
     }
 
+
+    void HandleTags(List<string> tags)
+    {
+        foreach (string tag in tags)
+        {
+            if (tag.StartsWith("char:"))
+            {
+                string[] parts = tag.Substring(5).Split(' ');
+
+                string charName = parts[0];    // toki
+                string expName = parts[1];     // happy
+
+                foreach (var set in characterSets)
+                {
+                    if (set.characterName == charName)
+                    {
+                        foreach (var exp in set.expressions)
+                        {
+                            if (exp.expressionName == expName)
+                            {
+                                characterImage.sprite = exp.sprite;
+                                return;
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
 
     void RefreshChoices()
     {
