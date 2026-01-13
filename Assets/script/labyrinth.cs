@@ -171,7 +171,7 @@ public class labyrinth : MonoBehaviour
                 else if (field[z, x] == 1) //•Ç‚È‚ç
                 {
                     //•Ç‚ğ“™ŠÔŠu‚Å•À‚×‚é
-                    wallgo = Instantiate(wallPrefab, new Vector3(5.0f * x, 5.0f, 5.0f * z), Quaternion.identity);//•Ç‚ğİ’u
+                    wallgo = Instantiate(wallPrefab, new Vector3(2.5f * x, 0, 2.5f * z), Quaternion.identity);//•Ç‚ğİ’u
                 }
             }
         }
@@ -200,9 +200,9 @@ public class labyrinth : MonoBehaviour
             GameObject prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
 
             Vector3 spawnPos = new Vector3(
-                pos.x * 5.0f,
-                2.5f,
-                pos.y * 5.0f
+                pos.x * 2.5f,
+                0f,
+                pos.y * 2.5f
             );
 
             Instantiate(prefab, spawnPos, Quaternion.identity);
