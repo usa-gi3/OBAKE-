@@ -17,6 +17,7 @@ public class InkController : MonoBehaviour
     public Transform choiceButtonContainer;
     public CharacterExpressionSet[] characterSets;
     public Image characterImage; // UI の画像
+    public TextMeshProUGUI_Animation textAnimator; //アニメーション用
 
     private Story story;
     bool choiceSelected = false;
@@ -82,7 +83,7 @@ public class InkController : MonoBehaviour
             }
         }
 
-        dialogueText.text = fullText;
+        textAnimator.PlayText(fullText);
         RefreshChoices();
     }
 
