@@ -1,0 +1,24 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb966fa0863b7649accbe9a636c0ccb, type: 3}
+  m_Name: tori
+  m_EditorClassIdentifier: 
+  characterName: "\u9CE5"
+  expressions:
+  - expressionName: "\u306A\u3093\u3067\u3059\u304B\uFF1F"
+    sprite: {fileID: 21300000, guid: a38bced655241db4890915eef95a9de6, type: 3}
+  - expressionName: "\u6C17\u3055\u304F\u306A\u6328\u62F6"
+    sprite: {fileID: 21300000, guid: 25419a28a2b05614ea862d871c48cffb, type: 3}
+  - expressionName: "\u30C9\u30E4\u30A1"
+    sprite: {fileID: 21300000, guid: bb935e062a124f84c84d1e61cac1dff7, type: 3}
+  - expressionName: "\u5F85\u3066\u3088\uFF1F\uFF01"
+    sprite: {fileID: 21300000, guid: a9de6465ff3b3ad44a331a267d196b9d, type: 3}
