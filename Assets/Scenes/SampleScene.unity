@@ -6492,6 +6492,19 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 51c6a324e15e2624e9ebe98115a1e07a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  openandclose: {fileID: 2051492583}
+  open: 0
+  Player: {fileID: 2057434369}
+  targetRb: {fileID: 0}
+  inkController: {fileID: 1668142558}
+  inkJSON: {fileID: 4900000, guid: 0f7b2f7e6db57da49ac200cd0c659f36, type: 3}
+  knotName: door_confirm
+  nextSceneName: random Scene
+--- !u!95 &2051492583 stripped
+Animator:
+  m_CorrespondingSourceObject: {fileID: 835323280870341542, guid: 229639aed4129534fa69a11f5305b94e, type: 3}
+  m_PrefabInstance: {fileID: 1923819362}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &2057434369 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 8997996947095583982, guid: c5efc39a8aaf6e64ea40e9ad573e9b47, type: 3}

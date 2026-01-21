@@ -2,6 +2,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Ink.Runtime;
+using System;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
 
@@ -22,6 +23,8 @@ public class InkController : MonoBehaviour
     private Story story;
     bool choiceSelected = false;
     bool blockClick = false;
+    public event Action<string> onInkResult;
+
 
 
     public void StartKnot(TextAsset inkJSON, string knotName)

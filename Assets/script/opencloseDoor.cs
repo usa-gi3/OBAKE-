@@ -1,4 +1,4 @@
-/*using System.Collections;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,6 +10,9 @@ namespace SojaExile
         public Animator openandclose;
         public bool open;
         public Transform Player;
+        public Rigidbody targetRb;   // 動きを止めたいオブジェクト
+        RigidbodyConstraints defaultConstraints;
+
 
         [Header("Ink")]
         public InkController inkController;
@@ -22,11 +25,11 @@ namespace SojaExile
         {
             open = false;
             inkController.onInkResult += OnInkResult;
-        }
 
-        void OnDestroy()
-        {
-            inkController.onInkResult -= OnInkResult;
+            if (targetRb != null)
+            {
+                defaultConstraints = targetRb.constraints;
+            }
         }
 
         void OnMouseOver()
@@ -49,12 +52,16 @@ namespace SojaExile
 
             yield return new WaitForSeconds(0.5f);
 
-            // Ink開始
+            LockMove();
+
             inkController.StartKnot(inkJSON, knotName);
         }
 
+
         void OnInkResult(string result)
         {
+            UnlockMove();
+
             if (result == "YES")
             {
                 SceneManager.LoadScene(nextSceneName);
@@ -65,6 +72,23 @@ namespace SojaExile
             }
         }
 
+        void LockMove()
+        {
+            if (targetRb == null) return;
+
+            targetRb.constraints =
+                RigidbodyConstraints.FreezePositionX |
+                RigidbodyConstraints.FreezePositionY |
+                RigidbodyConstraints.FreezePositionZ;
+        }
+
+        void UnlockMove()
+        {
+            if (targetRb == null) return;
+
+            targetRb.constraints = defaultConstraints;
+        }
+
         IEnumerator Closing()
         {
             openandclose.Play("Closing");
@@ -73,4 +97,3 @@ namespace SojaExile
         }
     }
 }
-*/
