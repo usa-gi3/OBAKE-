@@ -979,6 +979,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 54fd2826c2aa71f4cbf55d15b3ca41bd, type: 2}
   - {fileID: 11400000, guid: b215c4eb441a12048b62d0f04f4ce4f3, type: 2}
   - {fileID: 11400000, guid: d1cb5b25233c97e488a6195be1d18e89, type: 2}
+  - {fileID: 11400000, guid: 529bc70b29f37fb44871e95984690b07, type: 2}
   characterImage: {fileID: 197269502}
   textAnimator: {fileID: 1191242476}
 --- !u!4 &1093991097
