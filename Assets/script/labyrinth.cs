@@ -156,7 +156,7 @@ public class labyrinth : MonoBehaviour
 
         field[0, 1] = 0; //上の壁をなくしてスタート地点を作る
         field[max_y - 1, max_x - 2] = 0; //下の壁をなくしてゴール地点を作る
-        Vector3 goalPos = new Vector3((max_x - 2) * 5, 10 / 2f, (max_y - 1) * 5);
+        Vector3 goalPos = new Vector3((max_x - 2) , 10 / 2f, (max_y - 1) );
         Instantiate(goalPrefab, goalPos, Quaternion.identity);
 
         //壁の配置
@@ -171,7 +171,7 @@ public class labyrinth : MonoBehaviour
                 else if (field[z, x] == 1) //壁なら
                 {
                     //壁を等間隔で並べる
-                    wallgo = Instantiate(wallPrefab, new Vector3(5.0f * x, 5.0f, 5.0f * z), Quaternion.identity);//壁を設置
+                    wallgo = Instantiate(wallPrefab, new Vector3(3.2f * x, 0, 3.2f * z), Quaternion.identity);//壁を設置
                 }
             }
         }
@@ -200,9 +200,9 @@ public class labyrinth : MonoBehaviour
             GameObject prefab = itemPrefabs[Random.Range(0, itemPrefabs.Length)];
 
             Vector3 spawnPos = new Vector3(
-                pos.x * 5.0f,
-                2.5f,
-                pos.y * 5.0f
+                pos.x * 3f,
+                0f,
+                pos.y * 3f
             );
 
             Instantiate(prefab, spawnPos, Quaternion.identity);
