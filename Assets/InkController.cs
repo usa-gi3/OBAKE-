@@ -5,9 +5,12 @@ using Ink.Runtime;
 using System;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Linq;
 
 public class InkController : MonoBehaviour
 {
+    public event Action<string> onInkResult;
+
     [Header("Ink")]
     public TextAsset inkJSONAsset;
 
@@ -23,9 +26,6 @@ public class InkController : MonoBehaviour
     private Story story;
     bool choiceSelected = false;
     bool blockClick = false;
-    public event Action<string> onInkResult;
-
-
 
     public void StartKnot(TextAsset inkJSON, string knotName)
     {
@@ -143,6 +143,14 @@ public class InkController : MonoBehaviour
         // ëIëéàÇ™Ç»Ç¢èÍçáÇÕèIóπ
         if (!choiceSelected && story.currentChoices.Count == 0 && !story.canContinue)
         {
+            string result = "";
+
+            if (story.variablesState.Contains("doorResult"))
+            {
+                result = story.variablesState["doorResult"].ToString();
+            }
+
+            onInkResult?.Invoke(result);
             EndDialogue();
 
             NPCchoice npc = FindObjectOfType<NPCchoice>();
