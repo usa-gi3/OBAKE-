@@ -68,8 +68,17 @@ namespace StarterAssets
 
         private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
-		}
+            if (!hasFocus) return;
+
+            if (!cursorLocked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                return;
+            }
+
+            SetCursorState(cursorLocked);
+        }
 
 		private void SetCursorState(bool newState)
 		{

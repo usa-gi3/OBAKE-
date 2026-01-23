@@ -3,10 +3,10 @@
 === door_confirm ===
 業務に進みますか？
 
-+ はい
+* はい
     ~ doorResult = "YES"
     -> DONE
 
-+ いいえ
+* いいえ
     ~ doorResult = "NO"
     -> DONE

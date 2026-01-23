@@ -15,7 +15,7 @@ namespace SojaExile
 
 
         [Header("Ink")]
-        public InkController inkController;
+        public Inkcontroller3D inkController;
         public TextAsset inkJSON;
         public string knotName = "door_confirm";
 
