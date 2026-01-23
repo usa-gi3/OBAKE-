@@ -1015,7 +1015,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6789612260196119515, guid: bc82a0239e8094b4f9de80898abe80af, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 7dbb7c1bcde70084eb790929d6eead22, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 4cf9e81d9b3c69e448622abe9fc9c249, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.814
   m_Pitch: 1
@@ -1551,7 +1551,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ead77a78ab1144c4e835200a167f592f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mixer: {fileID: 24100000, guid: bc82a0239e8094b4f9de80898abe80af, type: 2}
+  audioMixer: {fileID: 24100000, guid: bc82a0239e8094b4f9de80898abe80af, type: 2}
+  bGMSlider: {fileID: 1717158773}
 --- !u!1 &1093991095
 GameObject:
   m_ObjectHideFlags: 0
@@ -2755,8 +2756,8 @@ MonoBehaviour:
   m_FillRect: {fileID: 1256435488}
   m_HandleRect: {fileID: 595289050}
   m_Direction: 0
-  m_MinValue: 0
-  m_MaxValue: 1
+  m_MinValue: -40
+  m_MaxValue: 0
   m_WholeNumbers: 0
   m_Value: 0
   m_OnValueChanged:
@@ -2764,7 +2765,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1085714866}
         m_TargetAssemblyTypeName: AudioManager, Assembly-CSharp
-        m_MethodName: SetVolume
+        m_MethodName: SetBGM
         m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

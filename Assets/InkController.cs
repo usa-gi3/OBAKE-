@@ -188,13 +188,19 @@ public class InkController : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
+
         if (story == null || dialoguePanel == null || blockClick)
             return;
 
-        if (dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
+        if (!dialoguePanel.activeSelf)
+            return;
+
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("ƒNƒŠƒbƒN‚µ‚½");
             Debug.Log("choiceSelected‚Í" + choiceSelected);
+
             if (story.canContinue)
                 ContinueStory();
         }

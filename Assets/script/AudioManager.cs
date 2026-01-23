@@ -2,40 +2,22 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Audio;
+using UnityEngine.UI;
 
 public class AudioManager : MonoBehaviour
 {
-    public static AudioManager Instance;
+    public AudioMixer audioMixer;
+    public Slider bGMSlider;
 
-    public AudioMixer mixer;
-
-    const string VOLUME_KEY = "MasterVolume";
-
-    void Awake()
+    private void Start()
     {
-        if (Instance != null)
-        {
-            Destroy(gameObject);
-            return;
-        }
-
-        Instance = this;
-        DontDestroyOnLoad(gameObject);
-
-        LoadVolume();
+        audioMixer.GetFloat("BGM_Volume", out float bgmVolume);
+        bGMSlider.value = bgmVolume;
     }
 
-    public void SetVolume(float value)
+    public void SetBGM(float volume)
     {
-        float dB = Mathf.Log10(Mathf.Clamp(value, 0.0001f, 1f)) * 20f;
-        mixer.SetFloat("MasterVolume", dB);
-
-        PlayerPrefs.SetFloat(VOLUME_KEY, value);
+        audioMixer.SetFloat("BGM_Volume", volume);
     }
 
-    void LoadVolume()
-    {
-        float value = PlayerPrefs.GetFloat(VOLUME_KEY, 1f);
-        SetVolume(value);
-    }
 }
