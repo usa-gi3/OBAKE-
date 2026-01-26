@@ -80,7 +80,16 @@ namespace StarterAssets
             SetCursorState(cursorLocked);
         }
 
-		private void SetCursorState(bool newState)
+        public void SetUIMode(bool isUI)
+        {
+            cursorLocked = !isUI;
+            cursorInputForLook = !isUI;
+
+            Cursor.lockState = isUI ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isUI;
+        }
+
+        private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}

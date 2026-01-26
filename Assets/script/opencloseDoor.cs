@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -12,6 +13,9 @@ namespace SojaExile
         public Transform Player;
         public Rigidbody targetRb;   // 動きを止めたいオブジェクト
         RigidbodyConstraints defaultConstraints;
+        public StarterAssetsInputs inputs;
+        public GameObject Canvas;
+        
 
 
         [Header("Ink")]
@@ -25,6 +29,7 @@ namespace SojaExile
         {
             open = false;
             inkController.onInkResult += OnInkResult;
+            Canvas.SetActive(false);
 
             if (targetRb != null)
             {
@@ -53,6 +58,8 @@ namespace SojaExile
             yield return new WaitForSeconds(0.5f);
 
             LockMove();
+            inputs.SetUIMode(true);
+            Canvas.SetActive(true);
 
             inkController.StartKnot(inkJSON, knotName);
         }
@@ -68,6 +75,7 @@ namespace SojaExile
             }
             else if (result == "NO")
             {
+                inputs.SetUIMode(false);
                 StartCoroutine(Closing());
             }
         }
