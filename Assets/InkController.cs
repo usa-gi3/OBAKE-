@@ -2,11 +2,15 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using Ink.Runtime;
+using System;
 using UnityEngine.SceneManagement;
 using System.Collections.Generic;
+using System.Linq;
 
 public class InkController : MonoBehaviour
 {
+    public event Action<string> onInkResult;
+
     [Header("Ink")]
     public TextAsset inkJSONAsset;
 
@@ -22,7 +26,6 @@ public class InkController : MonoBehaviour
     private Story story;
     bool choiceSelected = false;
     bool blockClick = false;
-
 
     public void StartKnot(TextAsset inkJSON, string knotName)
     {
@@ -140,6 +143,14 @@ public class InkController : MonoBehaviour
         // 選択肢がない場合は終了
         if (!choiceSelected && story.currentChoices.Count == 0 && !story.canContinue)
         {
+            string result = "";
+
+            if (story.variablesState.Contains("doorResult"))
+            {
+                result = story.variablesState["doorResult"].ToString();
+            }
+
+            onInkResult?.Invoke(result);
             EndDialogue();
 
             NPCchoice npc = FindObjectOfType<NPCchoice>();
@@ -177,13 +188,19 @@ public class InkController : MonoBehaviour
 
     void Update()
     {
+        if (Time.timeScale == 0f) return;
+
         if (story == null || dialoguePanel == null || blockClick)
             return;
 
-        if (dialoguePanel.activeSelf && Input.GetMouseButtonDown(0))
+        if (!dialoguePanel.activeSelf)
+            return;
+
+        if (Input.GetMouseButtonDown(0))
         {
             Debug.Log("クリックした");
             Debug.Log("choiceSelectedは" + choiceSelected);
+
             if (story.canContinue)
                 ContinueStory();
         }

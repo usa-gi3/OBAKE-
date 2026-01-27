@@ -68,10 +68,28 @@ namespace StarterAssets
 
         private void OnApplicationFocus(bool hasFocus)
 		{
-			SetCursorState(cursorLocked);
-		}
+            if (!hasFocus) return;
 
-		private void SetCursorState(bool newState)
+            if (!cursorLocked)
+            {
+                Cursor.lockState = CursorLockMode.None;
+                Cursor.visible = true;
+                return;
+            }
+
+            SetCursorState(cursorLocked);
+        }
+
+        public void SetUIMode(bool isUI)
+        {
+            cursorLocked = !isUI;
+            cursorInputForLook = !isUI;
+
+            Cursor.lockState = isUI ? CursorLockMode.None : CursorLockMode.Locked;
+            Cursor.visible = isUI;
+        }
+
+        private void SetCursorState(bool newState)
 		{
 			Cursor.lockState = newState ? CursorLockMode.Locked : CursorLockMode.None;
 		}

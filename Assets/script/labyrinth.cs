@@ -156,7 +156,7 @@ public class labyrinth : MonoBehaviour
 
         field[0, 1] = 0; //上の壁をなくしてスタート地点を作る
         field[max_y - 1, max_x - 2] = 0; //下の壁をなくしてゴール地点を作る
-        Vector3 goalPos = new Vector3((max_x - 2) , 10 / 2f, (max_y - 1) );
+        Vector3 goalPos = new Vector3((max_x - 2) * 3.2f,-4.3f,(max_y - 1) * 3.2f);
         Instantiate(goalPrefab, goalPos, Quaternion.identity);
 
         //壁の配置

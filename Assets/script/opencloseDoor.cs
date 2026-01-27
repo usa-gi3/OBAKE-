@@ -1,4 +1,5 @@
-/*using System.Collections;
+using StarterAssets;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
@@ -10,9 +11,15 @@ namespace SojaExile
         public Animator openandclose;
         public bool open;
         public Transform Player;
+        public Rigidbody targetRb;   // 動きを止めたいオブジェクト
+        RigidbodyConstraints defaultConstraints;
+        public StarterAssetsInputs inputs;
+        public GameObject Canvas;
+        
+
 
         [Header("Ink")]
-        public InkController inkController;
+        public Inkcontroller3D inkController;
         public TextAsset inkJSON;
         public string knotName = "door_confirm";
 
@@ -22,11 +29,12 @@ namespace SojaExile
         {
             open = false;
             inkController.onInkResult += OnInkResult;
-        }
+            Canvas.SetActive(false);
 
-        void OnDestroy()
-        {
-            inkController.onInkResult -= OnInkResult;
+            if (targetRb != null)
+            {
+                defaultConstraints = targetRb.constraints;
+            }
         }
 
         void OnMouseOver()
@@ -49,20 +57,44 @@ namespace SojaExile
 
             yield return new WaitForSeconds(0.5f);
 
-            // Ink開始
+            LockMove();
+            inputs.SetUIMode(true);
+            Canvas.SetActive(true);
+
             inkController.StartKnot(inkJSON, knotName);
         }
 
+
         void OnInkResult(string result)
         {
+            UnlockMove();
+
             if (result == "YES")
             {
                 SceneManager.LoadScene(nextSceneName);
             }
             else if (result == "NO")
             {
+                inputs.SetUIMode(false);
                 StartCoroutine(Closing());
             }
+        }
+
+        void LockMove()
+        {
+            if (targetRb == null) return;
+
+            targetRb.constraints =
+                RigidbodyConstraints.FreezePositionX |
+                RigidbodyConstraints.FreezePositionY |
+                RigidbodyConstraints.FreezePositionZ;
+        }
+
+        void UnlockMove()
+        {
+            if (targetRb == null) return;
+
+            targetRb.constraints = defaultConstraints;
         }
 
         IEnumerator Closing()
@@ -73,4 +105,3 @@ namespace SojaExile
         }
     }
 }
-*/
