@@ -560,7 +560,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1936739518475590817, guid: a3da6c5029d9aa44dbc0ba18d47c43cc, type: 3}
       propertyPath: m_text
-      value: "\u7D42\u4E86\u3059\u308B"
+      value: "\u30D0\u30C3\u30AF\u30EC\u308B"
       objectReference: {fileID: 0}
     - target: {fileID: 2313274121622048839, guid: a3da6c5029d9aa44dbc0ba18d47c43cc, type: 3}
       propertyPath: m_Pivot.x
@@ -2921,6 +2921,7 @@ GameObject:
   - component: {fileID: 1915906228}
   - component: {fileID: 1915906227}
   - component: {fileID: 1915906226}
+  - component: {fileID: 1915906229}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -3041,6 +3042,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_mat: {fileID: 2100000, guid: 3f1648f254692fd438ffba814095eb30, type: 2}
+--- !u!114 &1915906229
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1915906222}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 385036f22a9b95a46956bae549b9dc4d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1001 &1987247762
 PrefabInstance:
   m_ObjectHideFlags: 0
