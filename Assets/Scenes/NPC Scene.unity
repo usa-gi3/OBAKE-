@@ -1744,8 +1744,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 13d5059fd6f72da4e97c71633ad6e85e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inkJSONAsset: {fileID: 4900000, guid: 6d9b838257fb6a742866a593ec512bfd, type: 3}
-  npcChoice: {fileID: 1332913727}
+  currentStoryId: 
 --- !u!4 &1862784878
 Transform:
   m_ObjectHideFlags: 0

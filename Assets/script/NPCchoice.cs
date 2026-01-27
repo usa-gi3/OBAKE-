@@ -6,7 +6,7 @@ public class NPCchoice : MonoBehaviour
     public InkController inkController;  // © InkController ‚ğQÆ‚·‚é
     public TextAsset inkJSONAsset;
 
-    public string LastCharacterName { get; private set; }//–¼•ëŠÖ˜A
+   
 
     private string firstStory;
     private string secondStory;
