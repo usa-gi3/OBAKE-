@@ -560,7 +560,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1936739518475590817, guid: a3da6c5029d9aa44dbc0ba18d47c43cc, type: 3}
       propertyPath: m_text
-      value: "\u30D0\u30C3\u30AF\u30EC\u308B"
+      value: "\u7D42\u4E86\u3059\u308B"
       objectReference: {fileID: 0}
     - target: {fileID: 2313274121622048839, guid: a3da6c5029d9aa44dbc0ba18d47c43cc, type: 3}
       propertyPath: m_Pivot.x
@@ -2815,6 +2815,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   currentStoryId: 
+  selectedStoryIds: []
 --- !u!4 &1862784878
 Transform:
   m_ObjectHideFlags: 0
@@ -3535,3 +3536,4 @@ SceneRoots:
   - {fileID: 786484847}
   - {fileID: 1583015923}
   - {fileID: 1381864961}
+  - {fileID: 1862784878}

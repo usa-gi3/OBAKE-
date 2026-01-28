@@ -6,8 +6,6 @@ public class NPCchoice : MonoBehaviour
     public InkController inkController;  // Å© InkController ÇéQè∆Ç∑ÇÈ
     public TextAsset inkJSONAsset;
 
-   
-
     private string firstStory;
     private string secondStory;
 
