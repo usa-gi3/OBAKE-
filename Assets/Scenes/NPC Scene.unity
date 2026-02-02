@@ -1596,6 +1596,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d1cb5b25233c97e488a6195be1d18e89, type: 2}
   - {fileID: 11400000, guid: 529bc70b29f37fb44871e95984690b07, type: 2}
   - {fileID: 11400000, guid: bd1cfd8e9160c4341952ea8ca238c876, type: 2}
+  - {fileID: 11400000, guid: 89cdf29464cc68f45a860f6855f7c06c, type: 2}
   characterImage: {fileID: 197269502}
   textAnimator: {fileID: 1191242476}
 --- !u!4 &1093991097
