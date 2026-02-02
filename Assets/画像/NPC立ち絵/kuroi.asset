@@ -1,0 +1,22 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb966fa0863b7649accbe9a636c0ccb, type: 3}
+  m_Name: kuroi
+  m_EditorClassIdentifier: 
+  characterName: "\u9ED2\u4E95"
+  expressions:
+  - expressionName: "\u901A\u5E38"
+    sprite: {fileID: 21300000, guid: d91bf79bd73869f44ae7bdd9f9a96506, type: 3}
+  - expressionName: "\u76EE\u9589\u3058"
+    sprite: {fileID: 21300000, guid: 515f457d3a04b21478abdb1d71808909, type: 3}
+  - expressionName: "\u3073\u3063\u304F\u308A"
+    sprite: {fileID: 21300000, guid: 21d78108d983152449d8dbfee9ee9891, type: 3}

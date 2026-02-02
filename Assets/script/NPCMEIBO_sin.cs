@@ -31,7 +31,6 @@ public class NPCMEIBO : MonoBehaviour
             LoadSelectedStoryIds();
         }
 
-        DebugRandomFiveCharacters();
     }
 
     //いったん記録
@@ -123,21 +122,6 @@ public class NPCMEIBO : MonoBehaviour
                 PlayerPrefs.GetString($"SelectedStoryId_{i}")
             );
         }
-    }
-
-    // デバッグ表示
-    public void DebugRandomFiveCharacters()
-    {
-        Debug.Log("===== デバッグ名簿 =====");
-
-        for (int i = 0; i < selectedStoryIds.Count; i++)
-        {
-            string id = selectedStoryIds[i];
-            string name = GetCharacterName(id);
-            Debug.Log($" {name}");
-        }
-
-        Debug.Log("===================================");
     }
 
     //個別記録
