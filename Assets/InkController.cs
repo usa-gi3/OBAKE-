@@ -153,6 +153,7 @@ public class InkController : MonoBehaviour
             onInkResult?.Invoke(result);
             EndDialogue();
 
+            FindObjectOfType<NPCVisitCounter>()?.OnStoryFinished();
             NPCchoice npc = FindObjectOfType<NPCchoice>();
             if (npc != null)
                 npc.PlaySecondStory();

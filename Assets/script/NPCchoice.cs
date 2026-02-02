@@ -30,9 +30,10 @@ public class NPCchoice : MonoBehaviour
             PlayerPrefs.SetInt("FirstStoryPlayed", 1);
             PlayerPrefs.Save();
 
-            inkController.StartKnot(inkJSONAsset, firstStory);
+            inkController.StartKnot(inkJSONAsset, firstStory);           
         }
 
+        
     }
 
     public void PlaySecondStory()
