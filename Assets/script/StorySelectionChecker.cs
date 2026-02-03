@@ -1,49 +1,37 @@
 using UnityEngine;
+using System.Collections.Generic; 
 
-public class StorySelectionDebugLogger : MonoBehaviour
+public class StorySelectionChecker : MonoBehaviour
 {
-    public NPCMEIBO npcMeibo;
-    public NPCchoice npcChoice;
-
     /// <summary>
-    /// 1回目（FirstStory）の確認とログ出力
+    /// 現在選ばれている storyId が
+    /// 名簿（ランダム5人）に含まれているか判定
     /// </summary>
-    public void LogFirstStoryResult()
+    public bool IsStoryInMeibo(string storyId)
     {
-        string firstStory = PlayerPrefs.GetString("FirstStory", "");
-
-        if (string.IsNullOrEmpty(firstStory))
+        if (string.IsNullOrEmpty(storyId))
         {
-            Debug.LogWarning("FirstStory が取得できません");
-            return;
+            Debug.LogWarning("StorySelectionChecker: storyId が空です");
+            return false;
         }
 
-        bool isInFive = npcMeibo.selectedStoryIds.Contains(firstStory);
+        List<string> selectedStoryIds = new List<string>();
 
-        Debug.Log(
-            $"[1回目]\n" +
-            $"選ばれたstoryId : {firstStory}\n" +
-            $"最初の5人に含まれているか : {isInFive}"
-        );
-    }
-
-    /// <summary>
-    /// 2回目（SecondStory）の確認とログ出力
-    /// </summary>
-    public void LogSecondStoryResult(string secondStory)
-    {
-        if (string.IsNullOrEmpty(secondStory))
+        for (int i = 0; i < 5; i++)
         {
-            Debug.LogWarning("SecondStory が空です");
-            return;
+            string id = PlayerPrefs.GetString($"SelectedStoryId_{i}", "");
+            if (!string.IsNullOrEmpty(id))
+            {
+                selectedStoryIds.Add(id);
+            }
         }
 
-        bool isInFive = npcMeibo.selectedStoryIds.Contains(secondStory);
+        bool result = selectedStoryIds.Contains(storyId);
 
         Debug.Log(
-            $"[2回目]\n" +
-            $"選ばれたstoryId : {secondStory}\n" +
-            $"最初の5人に含まれているか : {isInFive}"
+            $"判定: {storyId} は名簿に載っているか → {result}"
         );
+
+        return result;
     }
 }
