@@ -11,7 +11,7 @@ public class NPCVisitCounter : MonoBehaviour
     {
         int count = PlayerPrefs.GetInt("NPC_VISIT_COUNT", 0);
 
-        count = (count + 1) % 3;
+        count = (count % 2) + 1;
 
         PlayerPrefs.SetInt("NPC_VISIT_COUNT", count);
         PlayerPrefs.Save();

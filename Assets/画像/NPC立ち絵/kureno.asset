@@ -1,0 +1,20 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9bb966fa0863b7649accbe9a636c0ccb, type: 3}
+  m_Name: kureno
+  m_EditorClassIdentifier: 
+  characterName: "\u66AE\u91CE"
+  expressions:
+  - expressionName: "\u901A\u5E38"
+    sprite: {fileID: 21300000, guid: 9a5c9479f6dc3584fb13a3554f68d4dd, type: 3}
+  - expressionName: "\u7126\u308A"
+    sprite: {fileID: 21300000, guid: 48c225259b1b31b4b86640d2ab5315f7, type: 3}
