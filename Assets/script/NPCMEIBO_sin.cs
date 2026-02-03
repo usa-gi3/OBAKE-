@@ -5,13 +5,10 @@ using TMPro;
 
 public class NPCMEIBO : MonoBehaviour
 {
-    // 現在再生中の story
     public string currentStoryId;
 
-    // 選ばれた5人の storyId
     public List<string> selectedStoryIds = new List<string>();
 
-    // storyId 一覧
     private readonly string[] allStoryIds =
     {
         "story1", "story2", "story3",
@@ -20,7 +17,6 @@ public class NPCMEIBO : MonoBehaviour
 
     void Start()
     {
-        // ゲーム開始時に1回だけランダム5人を決定
         if (!PlayerPrefs.HasKey("StoryIdsInitialized"))
         {
             selectedStoryIds = GetRandomFiveStoryIds();
@@ -31,9 +27,9 @@ public class NPCMEIBO : MonoBehaviour
             LoadSelectedStoryIds();
         }
 
+        PrintSelectedCharacterNames();
     }
 
-    //いったん記録
     public void RecordCharacter()
     {
         if (string.IsNullOrEmpty(currentStoryId))
@@ -63,7 +59,6 @@ public class NPCMEIBO : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    //storyId → 名前変換
     string GetCharacterName(string storyId)
     {
         switch (storyId)
@@ -83,7 +78,6 @@ public class NPCMEIBO : MonoBehaviour
         }
     }
 
-    //ランダム5人選出
     List<string> GetRandomFiveStoryIds()
     {
         List<string> pool = new List<string>(allStoryIds);
@@ -99,7 +93,6 @@ public class NPCMEIBO : MonoBehaviour
         return result;
     }
 
-    // 選ばれた storyId を保存
     void SaveSelectedStoryIds()
     {
         for (int i = 0; i < selectedStoryIds.Count; i++)
@@ -111,7 +104,6 @@ public class NPCMEIBO : MonoBehaviour
         PlayerPrefs.Save();
     }
 
-    // 保存された storyId を復元
     void LoadSelectedStoryIds()
     {
         selectedStoryIds.Clear();
@@ -124,7 +116,18 @@ public class NPCMEIBO : MonoBehaviour
         }
     }
 
-    //個別記録
+    public void PrintSelectedCharacterNames()
+    {
+        Debug.Log("=== 名簿 ===");
+
+        foreach (string storyId in selectedStoryIds)
+        {
+            if (string.IsNullOrEmpty(storyId)) continue;
+
+            Debug.Log(GetCharacterName(storyId));
+        }
+    }
+
     void RecordAikawa() => PlayerPrefs.SetInt("NPC_Aikawa", 1);
     void RecordItoi() => PlayerPrefs.SetInt("NPC_Itoi", 1);
     void RecordUkai() => PlayerPrefs.SetInt("NPC_Ukai", 1);
