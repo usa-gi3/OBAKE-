@@ -1567,7 +1567,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   firstScene: random Scene
-  secondScene: SecondResultScene
+  secondScene: End Scene
 --- !u!1 &1093991095
 GameObject:
   m_ObjectHideFlags: 0
@@ -1613,6 +1613,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd1cfd8e9160c4341952ea8ca238c876, type: 2}
   - {fileID: 11400000, guid: 89cdf29464cc68f45a860f6855f7c06c, type: 2}
   - {fileID: 11400000, guid: 755a86acb3f47f4469b93e1bfebaecc3, type: 2}
+  - {fileID: 11400000, guid: bd1cfd8e9160c4341952ea8ca238c876, type: 2}
   characterImage: {fileID: 197269502}
   textAnimator: {fileID: 1191242476}
 --- !u!4 &1093991097

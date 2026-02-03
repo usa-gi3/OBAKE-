@@ -8,7 +8,6 @@ public class NPCchoice : MonoBehaviour
 
     private string firstStory;
     private string secondStory;
-
     void Start()
     {
         if (firstStory != "")
@@ -52,6 +51,8 @@ public class NPCchoice : MonoBehaviour
         remaining.Remove(firstStory);
         secondStory = remaining[Random.Range(0, remaining.Count)];
 
+        PlayerPrefs.SetString("SecondStory", secondStory);
+        PlayerPrefs.Save();
         // 2回目のストーリーを再生
         inkController.StartKnot(inkJSONAsset, secondStory);
     }
