@@ -60,6 +60,8 @@ public class InkController : MonoBehaviour
 
     void ContinueStory()
     {
+        ClearChoices();
+
         blockClick = false;
         dialogueText.text = "";
 
@@ -136,10 +138,7 @@ public class InkController : MonoBehaviour
 
         Debug.Log("RefreshChoicesŒÄ‚Ño‚µ");
         // Šù‘¶‚Ì‘I‘ğˆ‚ğíœ
-        foreach (Transform child in choiceButtonContainer)
-        {
-            Destroy(child.gameObject);
-        }
+        ClearChoices();
 
         // ‘I‘ğˆ‚ğ¶¬
         for (int i = 0; i < story.currentChoices.Count; i++)
@@ -228,4 +227,12 @@ public class InkController : MonoBehaviour
                 ContinueStory();
         }
     }
+    void ClearChoices()
+    {
+        foreach (Transform child in choiceButtonContainer)
+        {
+            Destroy(child.gameObject);
+        }
+    }
+
 }
