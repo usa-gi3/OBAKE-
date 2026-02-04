@@ -6457,6 +6457,7 @@ GameObject:
   - component: {fileID: 1761955731}
   - component: {fileID: 1761955730}
   - component: {fileID: 1761955729}
+  - component: {fileID: 1761955734}
   m_Layer: 0
   m_Name: meibo
   m_TagString: Untagged
@@ -6566,6 +6567,20 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 37.682, z: 0}
+--- !u!114 &1761955734
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1761955728}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 13d5059fd6f72da4e97c71633ad6e85e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  currentStoryId: 
+  selectedStoryIds: []
 --- !u!1001 &1825573448
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -7066,30 +7081,13 @@ GameObject:
   - component: {fileID: 1950650107}
   - component: {fileID: 1950650106}
   - component: {fileID: 1950650105}
-  - component: {fileID: 1950650104}
   m_Layer: 0
-  m_Name: meibo (1)
+  m_Name: kiyakusyo
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!114 &1950650104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1950650103}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 28656345d59492141b86489293536e1b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  infoPanel: {fileID: 0}
-  nameText: {fileID: 0}
-  iconImage: {fileID: 0}
-  rotationSpeed: 0.1
 --- !u!65 &1950650105
 BoxCollider:
   m_ObjectHideFlags: 0

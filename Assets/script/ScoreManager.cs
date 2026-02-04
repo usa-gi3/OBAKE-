@@ -10,7 +10,14 @@ public class ScoreManager : MonoBehaviour
     // スコア
     public int score;
 
-   
+    const string SCORE_KEY = "TotalScore";
+
+    void Start()
+    {
+        // シーンに入ったときに既存スコアを読み込む
+        score = PlayerPrefs.GetInt(SCORE_KEY, 0);
+    }
+
     public void OnChoiceSelected(int choiceIndex)
     {
         // 0番以外は「受け取らない系」なので即終了
@@ -33,12 +40,15 @@ public class ScoreManager : MonoBehaviour
             return;
         }
 
-        // 名簿に存在するか
+        // 名簿に存在するか（←ここはそのまま）
         bool isInMeibo = meibo.selectedStoryIds.Contains(storyId);
 
         if (isInMeibo)
         {
             score++;
+            PlayerPrefs.SetInt(SCORE_KEY, score);
+            PlayerPrefs.Save();
+
             Debug.Log($"加点 +1！（{storyId}） 現在スコア: {score}");
         }
         else
