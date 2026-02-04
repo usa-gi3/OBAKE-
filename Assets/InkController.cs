@@ -67,15 +67,7 @@ public class InkController : MonoBehaviour
 
         if (choiceSelected)
         {
-            while (story.canContinue)
-            {
-                string line = story.Continue().Trim();
-
-                HandleTags(story.currentTags);
-
-                fullText += line + "\n";
-            }
-
+           
             string last = story.currentText?.Trim();
             if (!string.IsNullOrEmpty(last))
             {
