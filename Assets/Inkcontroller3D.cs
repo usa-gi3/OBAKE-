@@ -118,10 +118,6 @@ public class Inkcontroller3D : MonoBehaviour
 
             onInkResult?.Invoke(result);
             EndDialogue();
-
-            NPCchoice npc = FindObjectOfType<NPCchoice>();
-            if (npc != null)
-                npc.PlaySecondStory();
         }
     }
 

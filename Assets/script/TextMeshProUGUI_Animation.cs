@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System;
 using TMPro;
 using UnityEngine;
 
@@ -11,6 +12,8 @@ public class TextMeshProUGUI_Animation : MonoBehaviour
     private string fullText;      // 全文（アニメーション対象の文字列）
     private string currentText; // 現在表示されている文字列
     private int index = 0;        // 何文字目まで表示したかを管理するカウンタ
+
+    public event Action onTextFinished; 
 
     void Awake()
     {
@@ -47,6 +50,7 @@ public class TextMeshProUGUI_Animation : MonoBehaviour
         {
             // 全文表示が終わったら繰り返し呼び出しを停止
             CancelInvoke(nameof(ShowNextChar));
+            onTextFinished?.Invoke();
         }
     }
 }

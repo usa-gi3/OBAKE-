@@ -26,6 +26,18 @@ public class InkController : MonoBehaviour
     private Story story;
     bool choiceSelected = false;
     bool blockClick = false;
+    bool storyEnded = false;
+    bool waitForLastClick = false;
+
+    void Start()
+    {
+        textAnimator.onTextFinished += OnTextFinished;
+    }
+
+    void OnTextFinished()
+    {
+        RefreshChoices();
+    }
 
     public void StartKnot(TextAsset inkJSON, string knotName)
     {
@@ -85,9 +97,7 @@ public class InkController : MonoBehaviour
                 fullText = story.currentText?.Trim();
             }
         }
-
         textAnimator.PlayText(fullText);
-        RefreshChoices();
     }
 
 
@@ -122,6 +132,8 @@ public class InkController : MonoBehaviour
 
     void RefreshChoices()
     {
+        if (storyEnded) return;
+
         Debug.Log("RefreshChoices呼び出し");
         // 既存の選択肢を削除
         foreach (Transform child in choiceButtonContainer)
@@ -143,20 +155,26 @@ public class InkController : MonoBehaviour
         // 選択肢がない場合は終了
         if (!choiceSelected && story.currentChoices.Count == 0 && !story.canContinue)
         {
-            string result = "";
-
-            if (story.variablesState.Contains("doorResult"))
+            if (!waitForLastClick)
             {
-                result = story.variablesState["doorResult"].ToString();
+                waitForLastClick = true;
+                blockClick = false; // クリックを受け付ける
+                Debug.Log("最終テキスト表示完了。クリック待ち");
+                return;
             }
+
+            // クリック後にここへ来る
+            storyEnded = true;
+
+            string result = "";
+            if (story.variablesState.Contains("doorResult"))
+                result = story.variablesState["doorResult"].ToString();
 
             onInkResult?.Invoke(result);
             EndDialogue();
 
+            Debug.Log("OnStoryFinished が呼ばれた");
             FindObjectOfType<NPCVisitCounter>()?.OnStoryFinished();
-            NPCchoice npc = FindObjectOfType<NPCchoice>();
-            if (npc != null)
-                npc.PlaySecondStory();
         }
     }
 
@@ -199,8 +217,12 @@ public class InkController : MonoBehaviour
 
         if (Input.GetMouseButtonDown(0))
         {
-            Debug.Log("クリックした");
-            Debug.Log("choiceSelectedは" + choiceSelected);
+            if (waitForLastClick && !storyEnded)
+            {
+                Debug.Log("最終クリック → シーン遷移");
+                RefreshChoices();
+                return;
+            }
 
             if (story.canContinue)
                 ContinueStory();
