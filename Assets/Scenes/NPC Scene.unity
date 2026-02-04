@@ -2860,11 +2860,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862784876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 529cec6f359a59c43a8d0a9b997f9a7f, type: 3}
+  m_Script: {fileID: 11500000, guid: aaac2f2cf6b2138429c994c32536acdd, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  npcMeibo: {fileID: 1862784877}
-  npcChoice: {fileID: 0}
 --- !u!1001 &1874381781
 PrefabInstance:
   m_ObjectHideFlags: 0
