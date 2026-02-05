@@ -23,11 +23,26 @@ public class InkController : MonoBehaviour
     public Image characterImage; // UI の画像
     public TextMeshProUGUI_Animation textAnimator; //アニメーション用
 
+    // ===== 追加 =====
+    [Header("ChoiceServer")]
+    public string currentStoryId;
+    private ChoiceServer choiceServer;
+    // ===== 追加ここまで =====
+
     private Story story;
     bool choiceSelected = false;
     bool blockClick = false;
     bool storyEnded = false;
     bool waitForLastClick = false;
+
+    // ===== 追加 =====
+    void Awake()
+    {
+        choiceServer = FindObjectOfType<ChoiceServer>();
+        if (choiceServer == null)
+            Debug.LogWarning("[InkController] ChoiceServer が見つかりません");
+    }
+    // ===== 追加ここまで =====
 
     void Start()
     {
@@ -52,10 +67,12 @@ public class InkController : MonoBehaviour
         story = new Story(inkJSONAsset.text);
         story.ChoosePathString(knotName);   // ← 指定したknotを読む
 
+        // ===== 追加 =====
+        currentStoryId = knotName;
+        // ===== 追加ここまで =====
+
         dialoguePanel.SetActive(true);
         ContinueStory();
-
-
     }
 
     void ContinueStory()
@@ -69,7 +86,6 @@ public class InkController : MonoBehaviour
 
         if (choiceSelected)
         {
-           
             string last = story.currentText?.Trim();
             if (!string.IsNullOrEmpty(last))
             {
@@ -83,7 +99,6 @@ public class InkController : MonoBehaviour
             if (story.canContinue)
             {
                 fullText = story.Continue().Trim();
-
                 HandleTags(story.currentTags);
             }
             else
@@ -94,7 +109,6 @@ public class InkController : MonoBehaviour
         textAnimator.PlayText(fullText);
     }
 
-
     void HandleTags(List<string> tags)
     {
         foreach (string tag in tags)
@@ -103,8 +117,8 @@ public class InkController : MonoBehaviour
             {
                 string[] parts = tag.Substring(5).Split(' ');
 
-                string charName = parts[0];    // toki
-                string expName = parts[1];     // happy
+                string charName = parts[0];
+                string expName = parts[1];
 
                 foreach (var set in characterSets)
                 {
@@ -129,10 +143,8 @@ public class InkController : MonoBehaviour
         if (storyEnded) return;
 
         Debug.Log("RefreshChoices呼び出し");
-        // 既存の選択肢を削除
         ClearChoices();
 
-        // 選択肢を生成
         for (int i = 0; i < story.currentChoices.Count; i++)
         {
             Choice choice = story.currentChoices[i];
@@ -143,18 +155,16 @@ public class InkController : MonoBehaviour
             buttonObj.GetComponent<Button>().onClick.AddListener(() => OnChoiceSelected(choiceIndex));
         }
 
-        // 選択肢がない場合は終了
         if (!choiceSelected && story.currentChoices.Count == 0 && !story.canContinue)
         {
             if (!waitForLastClick)
             {
                 waitForLastClick = true;
-                blockClick = false; // クリックを受け付ける
+                blockClick = false;
                 Debug.Log("最終テキスト表示完了。クリック待ち");
                 return;
             }
 
-            // クリック後にここへ来る
             storyEnded = true;
 
             string result = "";
@@ -173,11 +183,17 @@ public class InkController : MonoBehaviour
     {
         Debug.Log("選択肢を選んだ: " + choiceIndex);
 
+        // ===== 追加 =====
+        if (choiceServer != null && !string.IsNullOrEmpty(currentStoryId))
+        {
+            choiceServer.RegisterChoice(currentStoryId, choiceIndex);
+        }
+        // ===== 追加ここまで =====
+
         blockClick = false;
         choiceSelected = false;
 
         story.ChooseChoiceIndex(choiceIndex);
-
         ContinueStory();
     }
 
@@ -186,7 +202,6 @@ public class InkController : MonoBehaviour
         dialoguePanel.SetActive(false);
         Debug.Log("Dialogue ended.");
 
-        // 2回目だったらリセット
         if (PlayerPrefs.HasKey("FirstStoryPlayed"))
         {
             PlayerPrefs.DeleteKey("FirstStoryPlayed");
@@ -219,6 +234,7 @@ public class InkController : MonoBehaviour
                 ContinueStory();
         }
     }
+
     void ClearChoices()
     {
         foreach (Transform child in choiceButtonContainer)
@@ -226,5 +242,4 @@ public class InkController : MonoBehaviour
             Destroy(child.gameObject);
         }
     }
-
 }
