@@ -3,8 +3,10 @@ using UnityEngine;
 
 public class NPCMEIBO : MonoBehaviour
 {
-    public string currentStoryId;
+    // ★ 追加：Singleton
+    public static NPCMEIBO Instance { get; private set; }
 
+    public string currentStoryId;
     public List<string> selectedStoryIds = new List<string>();
 
     // 名簿に載る可能性があるIDのみ
@@ -14,9 +16,22 @@ public class NPCMEIBO : MonoBehaviour
         "story6", "story7", "story8", "story9", "story10", "story11"
     };
 
+    void Awake()
+    {
+        // ★ 追加：多重生成防止
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+
+        Instance = this;
+        DontDestroyOnLoad(gameObject);
+    }
+
     void Start()
     {
-        // ★ このプレイ用の名簿が無ければ作る
+        // このプレイ用の名簿が無ければ作る
         if (!PlayerPrefs.HasKey("StoryIdsInitialized"))
         {
             selectedStoryIds = GetRandomFiveStoryIds();
@@ -77,7 +92,6 @@ public class NPCMEIBO : MonoBehaviour
 
     void SaveSelectedStoryIds()
     {
-        // ★ 古い名簿を確実に消す
         for (int i = 0; i < 5; i++)
         {
             PlayerPrefs.DeleteKey($"SelectedStoryId_{i}");
@@ -107,14 +121,12 @@ public class NPCMEIBO : MonoBehaviour
     public void PrintSelectedCharacterNames()
     {
         Debug.Log("=== 名簿 ===");
-
         foreach (string storyId in selectedStoryIds)
         {
             Debug.Log(GetCharacterName(storyId));
         }
     }
 
-    // ← ここを public に変更
     public string GetCharacterName(string storyId)
     {
         switch (storyId)
