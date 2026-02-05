@@ -3,31 +3,32 @@ using System.Collections.Generic;
 
 public class ChoiceServer : MonoBehaviour
 {
-    private int good = 0;
-    private int bad = 0;
+    private int score = 0;   // 正解数のみ管理
 
+    // 既に判定済みの storyId
     private readonly HashSet<string> registered = new HashSet<string>();
-    private readonly HashSet<string> roster = new HashSet<string>();
+
+    // 名簿（PlayerPrefs から復元）
+    private HashSet<string> roster = new HashSet<string>();
 
     void Start()
     {
-        LoadRosterFromNPCMEIBO();
+        LoadRosterFromPrefs();
+        Debug.Log("[ChoiceServer] 名簿取得完了");
     }
 
-    void LoadRosterFromNPCMEIBO()
+    void LoadRosterFromPrefs()
     {
         roster.Clear();
 
-        if (NPCMEIBO.Instance == null)
+        // NPCMEIBO が保存しているキー
+        for (int i = 0; i < 5; i++)
         {
-            Debug.LogError("[ChoiceServer] NPCMEIBO.Instance が存在しません");
-            return;
-        }
-
-        foreach (var id in NPCMEIBO.Instance.selectedStoryIds)
-        {
-            roster.Add(id);
-            Debug.Log($"[ChoiceServer] 名簿追加: {id}");
+            string key = $"SelectedStoryId_{i}";
+            if (PlayerPrefs.HasKey(key))
+            {
+                roster.Add(PlayerPrefs.GetString(key));
+            }
         }
 
         Debug.Log($"[ChoiceServer] 名簿人数: {roster.Count}");
@@ -44,37 +45,33 @@ public class ChoiceServer : MonoBehaviour
         registered.Add(storyId);
 
         bool inRoster = roster.Contains(storyId);
-        bool acted = (choiceIndex == 0);
+        bool acted = (choiceIndex == 0); // 何かしたかどうか
 
-        bool isGood;
+        bool isCorrect;
 
         if (inRoster)
         {
-            // 名簿にいる人を無視したら Bad
-            isGood = acted;
+            // 名簿にいる → 無視したら不正解
+            isCorrect = acted;
         }
         else
         {
-            // 名簿にいない人に触ったら Bad
-            isGood = !acted;
+            // 名簿にいない → 触ったら不正解
+            isCorrect = !acted;
         }
 
-        if (isGood)
+        if (isCorrect)
         {
-            good++;
-            Debug.Log($"[ChoiceServer] {storyId} → Good（{good}）");
+            score++;
+            PlayerPrefs.SetInt("GOOD_SCORE", score);
+            PlayerPrefs.Save();
+            Debug.Log($"[ChoiceServer] {storyId} → 正 SCORE={score}");
         }
         else
         {
-            bad++;
-            Debug.Log($"[ChoiceServer] {storyId} → Bad（{bad}）");
+            Debug.Log($"[ChoiceServer] {storyId} → 不");
         }
-
-        PlayerPrefs.SetInt("GOOD_SCORE", good);
-        PlayerPrefs.SetInt("BAD_SCORE", bad);
-        PlayerPrefs.Save();
     }
 
-    public int GetGood() => good;
-    public int GetBad() => bad;
+    public int GetScore() => score;
 }
