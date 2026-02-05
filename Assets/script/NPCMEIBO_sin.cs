@@ -1,7 +1,5 @@
 using System.Collections.Generic;
 using UnityEngine;
-using Ink.Runtime;
-using TMPro;
 
 public class NPCMEIBO : MonoBehaviour
 {
@@ -9,6 +7,7 @@ public class NPCMEIBO : MonoBehaviour
 
     public List<string> selectedStoryIds = new List<string>();
 
+    // 名簿に載る可能性があるIDのみ
     private readonly string[] allStoryIds =
     {
         "story1", "story2", "story3",
@@ -17,6 +16,7 @@ public class NPCMEIBO : MonoBehaviour
 
     void Start()
     {
+        // ★ このプレイ用の名簿が無ければ作る
         if (!PlayerPrefs.HasKey("StoryIdsInitialized"))
         {
             selectedStoryIds = GetRandomFiveStoryIds();
@@ -30,6 +30,7 @@ public class NPCMEIBO : MonoBehaviour
         PrintSelectedCharacterNames();
     }
 
+    // 出現記録（名簿にいるかどうかは別問題）
     public void RecordCharacter()
     {
         if (string.IsNullOrEmpty(currentStoryId))
@@ -43,8 +44,8 @@ public class NPCMEIBO : MonoBehaviour
             case "story1": RecordAikawa(); break;
             case "story2": RecordItoi(); break;
             case "story3": RecordUkai(); break;
-            case "story4": RecordBird(); break;
-            case "story5": RecordUnknown(); break;
+            case "story4": RecordBird(); break;      // 名簿外
+            case "story5": RecordUnknown(); break;   // 名簿外
             case "story6": RecordSanjo(); break;
             case "story7": RecordKuroi(); break;
             case "story8": RecordKurono(); break;
@@ -57,25 +58,6 @@ public class NPCMEIBO : MonoBehaviour
         }
 
         PlayerPrefs.Save();
-    }
-
-    string GetCharacterName(string storyId)
-    {
-        switch (storyId)
-        {
-            case "story1": return "相川";
-            case "story2": return "糸井";
-            case "story3": return "鵜飼";
-            case "story4": return "鳥";
-            case "story5": return "不明";
-            case "story6": return "三条";
-            case "story7": return "黒井";
-            case "story8": return "暮野";
-            case "story9": return "凪";
-            case "story10": return "鴎田";
-            case "story11": return "早乙女";
-            default: return "未定義";
-        }
     }
 
     List<string> GetRandomFiveStoryIds()
@@ -95,6 +77,12 @@ public class NPCMEIBO : MonoBehaviour
 
     void SaveSelectedStoryIds()
     {
+        // ★ 古い名簿を確実に消す
+        for (int i = 0; i < 5; i++)
+        {
+            PlayerPrefs.DeleteKey($"SelectedStoryId_{i}");
+        }
+
         for (int i = 0; i < selectedStoryIds.Count; i++)
         {
             PlayerPrefs.SetString($"SelectedStoryId_{i}", selectedStoryIds[i]);
@@ -110,9 +98,9 @@ public class NPCMEIBO : MonoBehaviour
 
         for (int i = 0; i < 5; i++)
         {
-            selectedStoryIds.Add(
-                PlayerPrefs.GetString($"SelectedStoryId_{i}")
-            );
+            string id = PlayerPrefs.GetString($"SelectedStoryId_{i}", "");
+            if (!string.IsNullOrEmpty(id))
+                selectedStoryIds.Add(id);
         }
     }
 
@@ -122,9 +110,27 @@ public class NPCMEIBO : MonoBehaviour
 
         foreach (string storyId in selectedStoryIds)
         {
-            if (string.IsNullOrEmpty(storyId)) continue;
-
             Debug.Log(GetCharacterName(storyId));
+        }
+    }
+
+    // ← ここを public に変更
+    public string GetCharacterName(string storyId)
+    {
+        switch (storyId)
+        {
+            case "story1": return "相川";
+            case "story2": return "糸井";
+            case "story3": return "鵜飼";
+            case "story4": return "鳥";
+            case "story5": return "不明";
+            case "story6": return "三条";
+            case "story7": return "黒井";
+            case "story8": return "暮野";
+            case "story9": return "凪";
+            case "story10": return "鴎田";
+            case "story11": return "早乙女";
+            default: return "未定義";
         }
     }
 

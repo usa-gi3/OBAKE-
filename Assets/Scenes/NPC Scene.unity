@@ -2770,7 +2770,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862784876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: aaac2f2cf6b2138429c994c32536acdd, type: 3}
+  m_Script: {fileID: 11500000, guid: 6d2a5b510e0f4e24c9d22b8c83659a6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
 --- !u!114 &1862784880
@@ -2782,12 +2782,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 1862784876}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8bd49955e3e8ce4468121ba20cfbf901, type: 3}
+  m_Script: {fileID: 11500000, guid: d29b8a03931e32b47b202a00e7d699a3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mapper: {fileID: 1862784879}
-  meibo: {fileID: 0}
-  score: 0
 --- !u!1001 &1874381781
 PrefabInstance:
   m_ObjectHideFlags: 0
