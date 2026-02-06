@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class Talkcontroller1 : MonoBehaviour
 {
@@ -21,6 +22,11 @@ public class Talkcontroller1 : MonoBehaviour
     void OnStoryFinished()
     {
         Debug.Log("‰ï˜b‚ªŠ®‘S‚ÉI—¹‚µ‚½");
+
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+
     }
 
     void OnDestroy()

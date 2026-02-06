@@ -13,8 +13,9 @@ public class ChoiceServer : MonoBehaviour
 
     void Start()
     {
-        LoadRosterFromPrefs();
-        Debug.Log("[ChoiceServer] 名簿取得完了");
+            LoadRosterFromPrefs();
+            score = PlayerPrefs.GetInt("GOOD_SCORE", 0); // ←追加
+            Debug.Log($"[ChoiceServer] 名簿取得完了 / 初期スコア={score}");
     }
 
     void LoadRosterFromPrefs()
@@ -62,15 +63,15 @@ public class ChoiceServer : MonoBehaviour
 
         if (isCorrect)
         {
-            score++;
+            score = Mathf.Min(score + 1, 2); // ←最大2に制限
             PlayerPrefs.SetInt("GOOD_SCORE", score);
             PlayerPrefs.Save();
             Debug.Log($"[ChoiceServer] {storyId} → 正 SCORE={score}");
         }
-        else
+        /*else
         {
             Debug.Log($"[ChoiceServer] {storyId} → 不");
-        }
+        }*/
     }
 
     public int GetScore() => score;
