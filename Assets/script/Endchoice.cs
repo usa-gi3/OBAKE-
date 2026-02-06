@@ -5,35 +5,16 @@ using UnityEngine.SceneManagement;
 
 public class Endchoice : MonoBehaviour
 {
-   /* public InkController inkController;  // ← InkController を参照する
-    public TextAsset inkJSONAsset;
-
-    string endKnot;
-    public int resultScore;
-
-    void Start()
+    public int GetResultScore()
     {
-        string endKnot = GetEndKnot();
-
-        inkController.onStoryCompletelyFinished += OnEndStoryFinished;
-        inkController.StartKnot(inkJSONAsset, endKnot);
+        return PlayerPrefs.GetInt("GOOD_SCORE", 0);
     }
 
-    string GetEndKnot()
+    public string GetEndKnot(int score)
     {
-        if (resultScore <= 0) return "End5";
-        if (resultScore == 1) return "End4";
-        if (resultScore == 2) return "End2";
+        if (score <= 0) return "End5";
+        if (score == 1) return "End4";
+        if (score == 2) return "End2";
         return "End3";
     }
-
-    void OnEndStoryFinished()
-    {
-        SceneManager.LoadScene("NextSceneName"); // ← 行きたいシーン
-    }
-
-    void OnDestroy()
-    {
-        inkController.onStoryCompletelyFinished -= OnEndStoryFinished;
-    }*/
 }

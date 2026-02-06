@@ -22,12 +22,11 @@ public class InkController : MonoBehaviour
     public CharacterExpressionSet[] characterSets;
     public Image characterImage; // UI の画像
     public TextMeshProUGUI_Animation textAnimator; //アニメーション用
+    public event Action onStoryFinished;
 
-    // ===== 追加 =====
     [Header("ChoiceServer")]
     public string currentStoryId;
     private ChoiceServer choiceServer;
-    // ===== 追加ここまで =====
 
     private Story story;
     bool choiceSelected = false;
@@ -35,14 +34,12 @@ public class InkController : MonoBehaviour
     bool storyEnded = false;
     bool waitForLastClick = false;
 
-    // ===== 追加 =====
     void Awake()
     {
         choiceServer = FindObjectOfType<ChoiceServer>();
         if (choiceServer == null)
             Debug.LogWarning("[InkController] ChoiceServer が見つかりません");
     }
-    // ===== 追加ここまで =====
 
     void Start()
     {
@@ -65,11 +62,9 @@ public class InkController : MonoBehaviour
         inkJSONAsset = inkJSON;
 
         story = new Story(inkJSONAsset.text);
-        story.ChoosePathString(knotName);   // ← 指定したknotを読む
+        story.ChoosePathString(knotName);
 
-        // ===== 追加 =====
         currentStoryId = knotName;
-        // ===== 追加ここまで =====
 
         dialoguePanel.SetActive(true);
         ContinueStory();
@@ -172,6 +167,7 @@ public class InkController : MonoBehaviour
                 result = story.variablesState["doorResult"].ToString();
 
             onInkResult?.Invoke(result);
+            onStoryFinished?.Invoke();
             EndDialogue();
 
             Debug.Log("OnStoryFinished が呼ばれた");
@@ -183,12 +179,10 @@ public class InkController : MonoBehaviour
     {
         Debug.Log("選択肢を選んだ: " + choiceIndex);
 
-        // ===== 追加 =====
         if (choiceServer != null && !string.IsNullOrEmpty(currentStoryId))
         {
             choiceServer.RegisterChoice(currentStoryId, choiceIndex);
         }
-        // ===== 追加ここまで =====
 
         blockClick = false;
         choiceSelected = false;
@@ -235,8 +229,24 @@ public class InkController : MonoBehaviour
         }
     }
 
+    public void SetInkVariable(string varName, object value)
+    {
+        if (story == null)
+        {
+            Debug.LogWarning("Story is null");
+            return;
+        }
+
+        story.variablesState[varName] = value;
+    }
+
+
     void ClearChoices()
     {
+        if (choiceButtonContainer == null)
+        {
+            return;
+        }
         foreach (Transform child in choiceButtonContainer)
         {
             Destroy(child.gameObject);
