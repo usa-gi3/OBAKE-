@@ -1015,7 +1015,7 @@ AudioSource:
   m_Enabled: 1
   serializedVersion: 4
   OutputAudioMixerGroup: {fileID: 6789612260196119515, guid: bc82a0239e8094b4f9de80898abe80af, type: 2}
-  m_audioClip: {fileID: 8300000, guid: 4cf9e81d9b3c69e448622abe9fc9c249, type: 3}
+  m_audioClip: {fileID: 8300000, guid: 9c6559aa6e568b142a533c015c960920, type: 3}
   m_PlayOnAwake: 1
   m_Volume: 0.814
   m_Pitch: 1
@@ -1617,6 +1617,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: bd1cfd8e9160c4341952ea8ca238c876, type: 2}
   characterImage: {fileID: 197269502}
   textAnimator: {fileID: 1191242476}
+  currentStoryId: 
 --- !u!4 &1093991097
 Transform:
   m_ObjectHideFlags: 0
