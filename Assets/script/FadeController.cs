@@ -34,4 +34,19 @@ public class FadeController : MonoBehaviour
 
         canvasGroup.alpha = end;
     }
+
+    public IEnumerator FadeCoroutine(float start, float end)
+    {
+        float t = 0f;
+
+        while (t < fadeDuration)
+        {
+            t += Time.deltaTime;
+            canvasGroup.alpha = Mathf.Lerp(start, end, t / fadeDuration);
+            yield return null;
+        }
+
+        canvasGroup.alpha = end;
+    }
+
 }

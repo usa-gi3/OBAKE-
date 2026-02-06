@@ -8,6 +8,7 @@ public class Talkcontroller1 : MonoBehaviour
     public InkController inkController;
     public Endchoice endchoice;
     public TextAsset inkJSON;
+    public FadeController fadeController;
 
     void Start()
     {
@@ -26,7 +27,20 @@ public class Talkcontroller1 : MonoBehaviour
         PlayerPrefs.DeleteAll();
         PlayerPrefs.Save();
 
+        StartCoroutine(FadeAndLoadScene("start Scene"));
+    }
 
+    private IEnumerator FadeAndLoadScene(string sceneName)
+    {
+        // フェードアウト
+        yield return fadeController.FadeCoroutine(0f, 1f);
+
+        // PlayerPrefs をクリア
+        PlayerPrefs.DeleteAll();
+        PlayerPrefs.Save();
+
+        // シーン切替
+        SceneManager.LoadScene("start Scene");
     }
 
     void OnDestroy()
