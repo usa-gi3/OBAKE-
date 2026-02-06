@@ -1,55 +1,72 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
-using UnityEngine.UI;
 
 public class MeiboCheck : MonoBehaviour
 {
-    SpriteRenderer sr;
+    public GameObject meiboPanel;
+    public TextMeshProUGUI[] nameTexts;
 
-    public GameObject infoPanel;
-    public TextMeshProUGUI nameText;
-    public Image iconImage;
-
-    public float rotationSpeed = 1f;
+    bool isOpen = false;
+    bool justOpened = false;   // ★ 追加：開いた直後フラグ
 
     void Start()
     {
-        sr = GetComponent<SpriteRenderer>();
-
-        if (infoPanel != null)
-            infoPanel.SetActive(false);
+        if (meiboPanel != null)
+            meiboPanel.SetActive(false);
     }
 
-    void OnMouseEnter()
+    void Update()
     {
-        if (sr != null)
-            sr.color = Color.red;
+        if (!isOpen) return;
 
-        if (infoPanel != null)
-            infoPanel.SetActive(true);
+        // ★ 開いた直後のクリックは無視
+        if (justOpened)
+        {
+            justOpened = false;
+            return;
+        }
 
-        if (nameText != null)
-            nameText.text = "相川";
-    }
-
-    void OnMouseOver()
-    {
-        transform.Rotate(0, 0, rotationSpeed);
-    }
-
-    void OnMouseExit()
-    {
-        if (sr != null)
-            sr.color = Color.white;
-
-        if (infoPanel != null)
-            infoPanel.SetActive(false);
+        // ★ それ以降はどこクリックしても消す
+        if (Input.GetMouseButtonDown(0))
+        {
+            HideMeibo();
+            isOpen = false;
+        }
     }
 
     void OnMouseDown()
     {
-        rotationSpeed *= -1;
+        if (isOpen) return;
+
+        ShowMeibo();
+        isOpen = true;
+        justOpened = true;   // ★ 追加
+    }
+
+    void ShowMeibo()
+    {
+        if (NPCMEIBO.Instance == null) return;
+
+        meiboPanel.SetActive(true);
+
+        foreach (var tmp in nameTexts)
+        {
+            if (tmp != null)
+                tmp.text = "";
+        }
+
+        for (int i = 0; i < NPCMEIBO.Instance.selectedStoryIds.Count; i++)
+        {
+            if (i >= nameTexts.Length) break;
+
+            string storyId = NPCMEIBO.Instance.selectedStoryIds[i];
+            nameTexts[i].text =
+                NPCMEIBO.Instance.GetCharacterName(storyId);
+        }
+    }
+
+    void HideMeibo()
+    {
+        meiboPanel.SetActive(false);
     }
 }
