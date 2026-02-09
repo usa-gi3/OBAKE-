@@ -1,3 +1,4 @@
+using StarterAssets;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -8,6 +9,7 @@ public class Goalobject : MonoBehaviour
     public float checkRadius = 0.5f;
     public LayerMask playerLayer;
     public string nextSceneName;
+    public StarterAssetsInputs inputs;
 
     bool isChanged = false;
 
@@ -24,6 +26,7 @@ public class Goalobject : MonoBehaviour
         if (hits.Length > 0)
         {
             isChanged = true;
+            inputs.SetUIMode(true);
             SceneManager.LoadScene(nextSceneName);
         }
     }
